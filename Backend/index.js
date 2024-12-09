@@ -3,35 +3,35 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth")
-
-
+const userRoute = require("./routes/user")
+const parcelRoute = require("./routes/parcel")
 
 dotenv.config();
 const app = express();
 
-
-//middlewars
+//MIDDLEWARES
 app.use(cors());
 app.use(express.json());
 
+//ROUTES
 
+app.use("/api/v1/auth",authRoute)
+app.use("/api/v1/users",userRoute)
+app.use("/api/v1/parcels",parcelRoute)
 
-//routes
-app.use("/auth", authRoute)
-//Database
-const DB = process.env.DB;
-mongoose.connect(DB).then( () => {
-    console.log("DB Connection is successful");
+//DATABASE CONNECTION
+const DB=process.env.DB;
+mongoose.connect(DB).then(()=>{
+    console.log("DB connection is successful");
 }).catch((err)=>{
     console.log(err)
 })
 
+//SERVER
 
-
-
-//server
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
+app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`)
-
 })
+
+//index.js

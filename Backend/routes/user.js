@@ -11,3 +11,5 @@ router.delete("/:id", deleteUser)
 router.get("/",getAllUsers)
 
 module.exports=router;
+
+

@@ -13,24 +13,10 @@ const Parcels = () => {
     { field: "recipientname", headerName: "Recipient Name", width: 150 },
     { field: "from", headerName: "From", width: 130 },
     { field: "to", headerName: "To", width: 130 },
-    // { field: "weight", headerName: "Weight (kg)", type: "number", width: 130 },
-    { field: "cost", headerName: "Cost ($)", type: "number", width: 130 },
-    {
-      field: "edit",
-      headerName: "Edit",
-      width: 150,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/parcel/${params.row._id}`}>
-              <button className="bg-teal-500 text-white cursor-pointer w-[70px]">
-                Edit
-              </button>
-            </Link>
-          </>
-        );
-      },
-    },
+    { field: "weight", headerName: "Weight (kg)", type: "number", width: 130 },
+    // { field: "cost", headerName: "Cost ($)", type: "number", width: 130 },
+    
+    
 
     {
       field: "delete",

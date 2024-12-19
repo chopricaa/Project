@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
       process.env.JWT_SEC,
       { expiresIn: "10d" }
     );
-    console.log("Generated Token:", accessToken); // Add this line
+    // console.log("Generated Token:", accessToken); // Add this line
 
     res.status(200).json({ ...info, accessToken });
   } catch (error) {

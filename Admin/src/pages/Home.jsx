@@ -1,7 +1,40 @@
 import { HiArrowSmallUp, HiArrowLongDown } from "react-icons/hi2";
 import { PieChart } from "@mui/x-charts/PieChart";
+import { useEffect, useState } from "react";
+import { publicRequest } from "../requestMethods";
 
 const Home = () => {
+  const [parcels, setParcels] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  const UsersCount = users.length;
+  const deliveredCount = parcels.filter(parcel => parcel.status === 3).length;
+  const pendingCount = parcels.filter(parcel => parcel.status === 1).length;
+
+  useEffect(() => {
+    const getParcels = async () => {
+      try {
+        const res = await publicRequest.get("/parcels");
+        setParcels(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getParcels();
+  }, []);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const res = await publicRequest.get("/Users");
+        setUsers(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUsers();
+  }, []);
+
   return (
     <div>
       {/* Top Section */}
@@ -14,7 +47,7 @@ const Home = () => {
               <HiArrowSmallUp className="text-[28px] text-green-500" />
               <HiArrowLongDown className="text-[28px] text-red-500" />
             </div>
-            <span className="mt-[20px] text-[18px]">100</span>
+            <span className="mt-[20px] text-[18px]">{UsersCount}</span>
           </div>
         </div>
         {/* Card 2 */}
@@ -25,7 +58,7 @@ const Home = () => {
               <HiArrowSmallUp className="text-[28px] text-green-500" />
               <HiArrowLongDown className="text-[28px] text-red-500" />
             </div>
-            <span className="mt-[20px] text-[18px]">100</span>
+            <span className="mt-[20px] text-[18px]">{deliveredCount}</span>
           </div>
         </div>
         {/* Card 3 */}
@@ -36,7 +69,7 @@ const Home = () => {
               <HiArrowSmallUp className="text-[28px] text-green-500" />
               <HiArrowLongDown className="text-[28px] text-red-500" />
             </div>
-            <span className="mt-[20px] text-[18px]">100</span>
+            <span className="mt-[20px] text-[18px]">{pendingCount}</span>
           </div>
         </div>
       </div>
@@ -49,9 +82,9 @@ const Home = () => {
             series={[
               {
                 data: [
-                  { id: 0, value: 10, label: "Pending Parcels" },
-                  { id: 1, value: 15, label: "Delivered Parcels" },
-                  { id: 2, value: 20, label: "Rejected Parcels" },
+                  { id: 0, value: pendingCount, label: "Pending Parcels" },
+                  { id: 1, value: deliveredCount, label: "Delivered Parcels" },
+                  { id: 2, value: UsersCount, label: "Users" },
                 ],
                 innerRadius: 30,
                 outerRadius: 100,
@@ -63,6 +96,16 @@ const Home = () => {
                 cy: 150,
               },
             ]}
+            sx={{
+              "& .MuiChartsLegend-root": {
+                color: "#ffffff", // Makes legend text white
+                fontWeight: "bold",
+              },
+              "& .MuiChartsArcLabel-label": {
+                fill: "#ffffff", // Makes pie labels white
+                fontWeight: "bold",
+              },
+            }}
           />
         </div>
 
@@ -81,3 +124,4 @@ const Home = () => {
 };
 
 export default Home;
+

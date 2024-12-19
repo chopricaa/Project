@@ -27,7 +27,7 @@ const sendWelcomeEmail = async () => {
           let messageOption = {
             from: process.env.EMAIL,
             to: user.email,
-            subject: "Welcome to CarbonLite",
+            subject: "Welcome to EcoLite",
             html: info,
           };
           try {
@@ -43,6 +43,3 @@ const sendWelcomeEmail = async () => {
 };
 
 module.exports = { sendWelcomeEmail };
-
-
-//backgroundservices emailservice welcomeemail

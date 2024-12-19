@@ -1,97 +1,120 @@
 import { FaUser } from "react-icons/fa";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-// import MyParcels from "./MyParcels";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { publicRequest } from "../requestMethods";
+import { logOut } from "../redux/userRedux";
 
 const MyParcels = () => {
   const [open, setOpen] = useState(false);
+  const [parcels, setParcels] = useState([]);
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    const getParcels = async () => {
+      try {
+        const res = await publicRequest.post("/parcels/me", {
+          email: user.currentUser.email,
+        });
+        setParcels(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getParcels();
+  }, []);
+
+  const Logout = () => {
+    dispatch(logOut());
+    navigate("/login");
+  };
+
   return (
-    <div>
-      <div className=" relative flex items-end justify-end mr-[20%] mt-[5%] font-semibold cursor-pointer">
-        <div className="flex items-center  text-white" onClick={handleOpen}>
-          <FaUser className="mr-[10px]" />
-          Anisetty Chopricaa
+    <div style={{ backgroundColor: "#121212", minHeight: "100vh", color: "#D9D9D9" }}>
+      <div className="relative flex items-end justify-end mr-[20%] mt-[3%]">
+        <div>
+          <span
+            className="flex items-center text-white font-semibold cursor-pointer"
+            onClick={handleOpen}
+          >
+            <FaUser className="mr-[10px]" />
+            {user.currentUser.fullname}
+          </span>
         </div>
         {open && (
-          <div className="absolute top-[20px] right-0 h-[200px] w-[250px] bg-[#d9d9d9] z-[999] shadow-xl">
-            <ul className="flex flex-col items-center justify-center mt-[10px] text-[#555]">
+          <div
+            className="absolute top-[20px] right-0 h-[200px] w-[250px] bg-[#D9D9D9] z-[999] shadow-xl"
+            style={{ color: "#555" }}
+          >
+            <ul className="flex flex-col items-center justify-center mt-[10px]">
               <Link to="/allparcels">
-                <li className="hover:text-[#fff] my-[5px] cursor-pointer">
-                  All Parcels
-                </li>
+                <li className="hover:text-[#fff] my-[5px] cursor-pointer">All parcels</li>
               </Link>
-
-              <li className="hover:text-[#fff] my-[5px] cursor-pointer">
-                Statements
-              </li>
-              <li className="hover:text-[#fff] my-[5px] cursor-pointer">
+              <li className="hover:text-[#fff] my-[5px] cursor-pointer">Statements</li>
+              <li
+                className="hover:text-[#fff] my-[5px] cursor-pointer"
+                onClick={Logout}
+              >
                 Logout
               </li>
             </ul>
           </div>
         )}
       </div>
-
       <div className="flex justify-evenly px-[5%]">
         <div className="h-[90vh] w-[60vw] rounded-md">
-          <h2 className="text-[18px] text-[#D9D9D9] p-[20px]">My Parcels</h2>
-          <div className="flex justify-between bg-[#D9D9D9] h-[150px] w-[60vw] m-[20px] p-[20px] cursor-pointer text-[#555]">
-            <div>
-              <ul>
-                <li>From: Andhra</li>
-                <li>Weight: 200g</li>
-                <li>Date: 07/12/2024</li>
-                <li>Sender: Anisetty</li>
-              </ul>
-            </div>
-
-            <div className="flex flex-col">
-              <span>To: Chennai</span>
-              <button className="bg-[#555] text-white w-[100px] cursor-pointer p-[5px]">
-                Pending
+          <div className="flex justify-between items-center p-[20px]">
+            <h2 className="text-[18px]">My Parcels</h2>
+            {/* Create Parcel Button */}
+            <Link to="/create-parcel">
+              <button
+                className="bg-[#45de52] text-white px-[15px] py-[8px] rounded-md hover:bg-[#3bb43e]"
+              >
+                + Create Parcel
               </button>
-            </div>
+            </Link>
           </div>
 
-          <div className="flex justify-between bg-[#D9D9D9] h-[150px] w-[60vw] m-[20px] p-[20px] cursor-pointer text-[#555]">
-            <div>
-              <ul>
-                <li>From: Andhra</li>
-                <li>Weight: 200g</li>
-                <li>Date: 07/12/2024</li>
-                <li>Sender: James Doe</li>
-              </ul>
-            </div>
+          {parcels.map((parcel, index) => (
+            <Link key={index} to={`/parcel/${parcel._id}`}>
+              <div
+                className="flex justify-between h-[150px] w-[60vw] m-[20px] p-[20px] cursor-pointer"
+                style={{
+                  backgroundColor: "#D9D9D9",
+                  borderRadius: "10px",
+                  color: "#121212",
+                }}
+              >
+                <div>
+                  <ul>
+                    <li>From: {parcel.from}</li>
+                    <li>Weight: {parcel.weight} kg</li>
+                    <li>Date: {parcel.date}</li>
+                    <li>Sender: {parcel.sendername}</li>
+                  </ul>
+                </div>
 
-            <div className="flex flex-col">
-              <span>To: Chennai</span>
-              <button className="bg-[#555] text-white w-[100px] cursor-pointer p-[5px]">
-                Pending
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-between bg-[#D9D9D9] h-[150px] w-[60vw] m-[20px] p-[20px] cursor-pointer text-[#555]">
-            <div>
-              <ul>
-                <li>From: Andhra</li>
-                <li>Weight: 200g</li>
-                <li>Date: 07/12/2024</li>
-                <li>Sender: Anisetty</li>
-              </ul>
-            </div>
-
-            <div className="flex flex-col">
-              <span>To: Chennai</span>
-              <button className="bg-[#5bd333] text-white w-[100px] cursor-pointer p-[5px]">
-                Delivered
-              </button>
-            </div>
-          </div>
+                <div className="flex flex-col">
+                  <span>To: {parcel.to}</span>
+                  <button
+                    className={`w-[100px] cursor-pointer padding-[5px] ${
+                      parcel.status === 1
+                        ? "bg-[#555] text-white"
+                        : "bg-[#45de52] text-white"
+                    }`}
+                  >
+                    {parcel.status === 1 ? "Pending" : "Delivered"}
+                  </button>
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>
@@ -99,3 +122,6 @@ const MyParcels = () => {
 };
 
 export default MyParcels;
+
+
+

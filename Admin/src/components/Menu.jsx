@@ -1,15 +1,15 @@
 import {
   FaHome,
   FaUsers,
-  FaUser,
+  // FaUser,
   FaBox,
-  FaClipboardList,
-  FaElementor,
-  FaCog,
-  FaHdd,
-  FaChartBar,
-  FaClipboard,
-  FaCalendarAlt,
+  // FaClipboardList,
+  // FaElementor,
+  // FaCog,
+  // FaHdd,
+  // FaChartBar,
+  // FaClipboard,
+  // FaCalendarAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const Menu = () => {
@@ -22,12 +22,12 @@ const Menu = () => {
             Home
           </li>
         </Link>
-        <li className="flex items-center text-[#D7D7D7] text-[18px] hover:text-[#E9EB77] cursor-pointer mt-[20px]">
+        {/* <li className="flex items-center text-[#D7D7D7] text-[18px] hover:text-[#E9EB77] cursor-pointer mt-[20px]">
           <FaUser className="mr-[15px]" />
           Profile
         </li>
 
-        <hr className="h-[20px]" />
+        <hr className="h-[20px]" /> */}
 
         <Link to="/parcels">
           <li className="flex items-center text-[#D7D7D7] text-[18px] hover:text-[#E9EB77] cursor-pointer mt-[20px]">
@@ -43,7 +43,7 @@ const Menu = () => {
           </li>
         </Link>
 
-        <li className="flex items-center text-[#D7D7D7] text-[18px] hover:text-[#E9EB77] cursor-pointer mt-[20px]">
+        {/* <li className="flex items-center text-[#D7D7D7] text-[18px] hover:text-[#E9EB77] cursor-pointer mt-[20px]">
           <FaClipboardList className="mr-[15px]" />
           Orders
         </li>
@@ -76,7 +76,7 @@ const Menu = () => {
         <li className="flex items-center text-[#D7D7D7] text-[18px] hover:text-[#E9EB77] cursor-pointer mt-[20px]">
           <FaCalendarAlt className="mr-[15px]" />
           Calendar
-        </li>
+        </li> */}
       </ul>
     </div>
   );

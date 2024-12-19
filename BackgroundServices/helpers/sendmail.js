@@ -2,33 +2,36 @@ const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 dotenv.config();
 
+// Function to create a transporter
 function createTransporter(config) {
-  const transporter = nodemailer.createTransport(config);
-  return transporter;
+  return nodemailer.createTransport(config);
 }
 
+// Mail configuration
 let configurations = {
   service: "gmail",
   host: "smtp.gmail.com",
   port: 587,
   requireTLS: true,
   auth: {
-    user: process.env.EMAIl,
+    user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   },
 };
 
-const sendMail = async (messageoption) => {
-  const transporter = await createTransporter(configurations);
-  await transporter.verify();
-  await transporter.sendMail(messageoption, (err, info) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(info.response);
-  });
+// Send Mail function
+const sendMail = async (messageOption) => {
+  const transporter = createTransporter(configurations);
+
+  try {
+    // Verify the connection configuration
+    await transporter.verify();
+    // Send the email and await the result
+    const info = await transporter.sendMail(messageOption);
+    console.log("Email sent: " + info.response);
+  } catch (err) {
+    console.log("Error sending email:", err);
+  }
 };
 
 module.exports = sendMail;
-
-//backgroundservices helpers sendmail

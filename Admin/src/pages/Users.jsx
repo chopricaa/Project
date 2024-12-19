@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
+
+import 'react-toastify/dist/ReactToastify.css';
 import { DataGrid } from "@mui/x-data-grid";
 import { FaTrash } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
-
-
 
 
 const Users = () => {
@@ -14,7 +14,7 @@ const Users = () => {
     { field: "fullname", headerName: "Full Name", width: 200 },
     { field: "email", headerName: "Email", width: 250 },
     { field: "age", headerName: "Age", type: "number", width: 100 },
-    // { field: 'country', headerName: 'Country', width: 150 },
+    { field: 'country', headerName: 'Country', width: 150 },
     { field: "address", headerName: "Address", width: 300 },
     {
       field: "delete",

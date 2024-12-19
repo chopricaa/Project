@@ -6,13 +6,13 @@ const Footer = () => {
       <div className="flex flex-col">
       <img src="./logoo.png" alt="" height="200px" width="200px" />
       <span className="w-[70%]">Experience seamless, eco-friendly delivery solutions with CarbonLite. We prioritize sustainability and efficiency, ensuring your goods are delivered with minimal environmental impact.</span>
-      <span>+919014078564</span>
-      <span>anisettychopricaa@gmail.com</span>
+      <span>+919876543210</span>
+      <span>carbonlitedelivery@gmail.com</span>
 
       </div>
 
       <div className="flex flex-col">
-        <span>Design by Tech Maverics</span>
+        <span>Design by Tech Mavericks</span>
         <span>&copy; copyright 2024</span>
 
       </div>

@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const cron = require("node-cron");
 const mongoose = require("mongoose");
 const { sendWelcomeEmail } = require("./EmailService/WelcomeEmail");
+const { SendParcelPendingEmail } = require("./EmailService/PendingParcel");
+const { sendParcelDeliveredEmail } = require("./EmailService/DeliveredParcel");
 
 dotenv.config();
 
@@ -22,7 +24,9 @@ mongoose
 
 const run = () => {
   cron.schedule("* * * * *", () => {
-    sendWelcomeEmail();
+    sendWelcomeEmail()
+    
+   
   });
 };
 
@@ -33,5 +37,3 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`BackgroundServices is running on port ${PORT}`);
 });
-
-//background servicecs index.js

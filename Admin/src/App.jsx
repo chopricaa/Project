@@ -31,25 +31,22 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <Login />, // Login page as the root page
+    },
+    {
+      path: "/home",
       element: <Layout />,
       children: [
-        { path: "/", element: <Home /> },
-        { path: "/parcels", element: <Parcels /> },
-        { path: "/newparcel", element: <NewParcel /> },
-        { path: "/newuser", element: <NewUser /> },
-        
-
-        { path: "/parcel/:parcelId", element: <Parcel /> },
-        { path: "/users", element: <Users /> },
+        { path: "", element: <Home /> },  // Home page when visiting /home
+        { path: "parcels", element: <Parcels /> },
+        { path: "newparcel", element: <NewParcel /> },
+        { path: "newuser", element: <NewUser /> },
+        { path: "parcel/:parcelId", element: <Parcel /> },
+        { path: "users", element: <Users /> },
       ],
     },
-    { path: "/parcels", element: <Parcels /> },
-    { path: "/parcel/:parcelId", element: <Parcel /> },
-    {
-      path: "/login",
-      element: <Login />,
-    },
   ]);
+
   return (
     <>
       <RouterProvider router={router} />

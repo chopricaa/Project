@@ -6,6 +6,7 @@ const authRoute = require("./routes/auth")
 const userRoute = require("./routes/user")
 const parcelRoute = require("./routes/parcel")
 
+
 dotenv.config();
 const app = express();
 
@@ -19,12 +20,14 @@ app.use("/api/v1/auth",authRoute)
 app.use("/api/v1/users",userRoute)
 app.use("/api/v1/parcels",parcelRoute)
 
+
 //DATABASE CONNECTION
 const DB=process.env.DB;
 mongoose.connect(DB).then(()=>{
     console.log("DB connection is successful");
 }).catch((err)=>{
     console.log(err)
+   
 })
 
 //SERVER

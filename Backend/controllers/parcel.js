@@ -1,4 +1,4 @@
-const Parcel = require("../models/parcel");
+const Parcel = require("../models/Parcel");
 
 //CREATE PARCEL
 
@@ -69,11 +69,50 @@ const deleteParcel = async (req, res) => {
   }
 };
 
+
+// ADD TRACKING CHECKPOINT
+const addTrackingCheckpoint = async (req, res) => {
+  try {
+    const { location, status } = req.body;
+    const parcel = await Parcel.findById(req.params.id);
+
+    if (!parcel) {
+      return res.status(404).json({ message: "Parcel not found" });
+    }
+
+    parcel.tracking.push({ location, status });
+    await parcel.save();
+
+    res.status(200).json({ message: "Checkpoint added", tracking: parcel.tracking });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+// GET TRACKING DETAILS
+const getTrackingDetails = async (req, res) => {
+  try {
+    const parcel = await Parcel.findById(req.params.id);
+
+    if (!parcel) {
+      return res.status(404).json({ message: "Parcel not found" });
+    }
+
+    res.status(200).json(parcel.tracking);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 module.exports = {
+  createParcel,
+  getAllParcels,
+  getOneParcel,
   deleteParcel,
   getUserParcel,
-  getOneParcel,
   updateParcel,
-  getAllParcels,
-  createParcel,
+  addTrackingCheckpoint,
+  getTrackingDetails,
 };
+
+
